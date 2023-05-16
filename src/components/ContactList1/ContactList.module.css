@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+}
+
+.contactTable {
+  border-collapse: collapse;
+  width: 0 auto;
+  background-color: aliceblue;
+}
+
+.contactTable td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.contactName,
+.contactNumber {
+  margin: 0;
+}
+
+.deleteButton {
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  background-color: gray;
+}
+
+.deleteButton:hover {
+  background-color: red;
+}
