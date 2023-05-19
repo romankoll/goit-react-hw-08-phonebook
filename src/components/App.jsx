@@ -34,24 +34,20 @@ class App extends Component {
   };
 
   addNewItem = newItem => {
-    this.setState(prevState => {
-      const isDuplicate = prevState.contacts.some(
-        contact => contact.name.toLowerCase() === newItem.name.toLowerCase()
-      );
-
-      if (!isDuplicate) {
-        return {
-          contacts: [...prevState.contacts, newItem],
-        };
-      }
-      return prevState;
-    });
+    this.setState(prevState => ({
+      contacts: [...prevState.contacts, newItem],
+    }));
   };
 
   addItem = (name, number) => {
     // console.log(name, number);
     const { contacts } = this.state;
-    if (contacts.some(contact => contact.name === name)) {
+
+    if (
+      contacts.some(
+        contact => contact.name.toLowerCase() === name.toLowerCase()
+      )
+    ) {
       return alert(`${name} is already in contacts`);
     }
     const newItem = {
