@@ -34,9 +34,18 @@ class App extends Component {
   };
 
   addNewItem = newItem => {
-    this.setState(prevState => ({
-      contacts: [...prevState.contacts, newItem],
-    }));
+    this.setState(prevState => {
+      const isDuplicate = prevState.contacts.some(
+        contact => contact.name.toLowerCase() === newItem.name.toLowerCase()
+      );
+
+      if (!isDuplicate) {
+        return {
+          contacts: [...prevState.contacts, newItem],
+        };
+      }
+      return prevState;
+    });
   };
 
   addItem = (name, number) => {

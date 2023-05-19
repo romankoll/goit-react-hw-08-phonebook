@@ -8,6 +8,8 @@ class ContactForm extends Component {
     number: '',
   };
 
+
+
   handleInputChange = event => {
     const { name, value } = event.target;
     this.setState({
@@ -19,6 +21,7 @@ class ContactForm extends Component {
   handleFormSubmit = evt => {
     // console.log(this.state);
     evt.preventDefault();
+    
     const { name, number } = this.state;
     this.props.onSubmit(name, number);
     this.setState({ name: '', number: '' });
