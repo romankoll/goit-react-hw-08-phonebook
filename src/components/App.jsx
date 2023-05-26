@@ -1,13 +1,19 @@
 import { nanoid } from 'nanoid';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Filter from './Filter/Filter';
 import ContactList from './ContactList1/ContactList';
 import ContactForm from './ContactForm/ContactForm';
 import React from 'react';
 
 const App = () => {
-  const [contacts, setContacts] = useState([]);
   const [filter, setFilter] = useState('');
+  const [contacts, setContacts] = useState(() => {
+    return JSON.parse(localStorage.getItem('contacts')) ?? [];
+  });
+
+  // useEffect(() => {
+  //   console.log('effect');
+  // });
 
   // const componentDidMount = () => {
   //   const localData = localStorage.getItem('contacts');
@@ -16,21 +22,20 @@ const App = () => {
   //   }
   // };
 
+  // useEffect(() => {
+  //   console.log('effect 2');
+  // }, []);
+
+  useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
   // const componentDidUpdate = (prevProps, prevState) => {
   //   if (prevState.contacts.length !== this.state.contacts.length) {
   //     localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
   //   }
   // };
 
-  // const addNewItem = newItem => {
-  //   this.setState(prevState => ({
-  //     contacts: [...prevState.contacts, newItem],
-  //   }));
-  // };
-
   const addItem = (name, number) => {
-    // console.log(name, number);
-
     if (
       contacts.some(
         contact => contact.name.toLowerCase() === name.toLowerCase()
