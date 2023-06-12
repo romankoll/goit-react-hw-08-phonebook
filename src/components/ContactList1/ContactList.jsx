@@ -1,24 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import css from 'components/ContactList1/ContactList.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { getContacts, getFilter } from 'redux/selectors';
+import { deleteContact } from 'redux/contactsSlice';
 
-const ContactList = ({ contacts, onDeleteContact }) => {
+const ContactList = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
+
+  const filterByName = filter => {
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter)
+    );
+  };
+
+  const normalizedFilter = filter.toLowerCase();
+  const filtredContacts = filterByName(normalizedFilter);
+
   return (
     <div className={css.container}>
       <table className={css.contactTable}>
         <tbody>
-          {contacts.map(contact => (
-            <tr key={contact.id}>
+          {filtredContacts.map(({ id, name, number }) => (
+            <tr key={id}>
               <td>
-                <p className={css.contactName}>{contact.name}</p>
+                <p className={css.contactName}>{name}</p>
               </td>
               <td>
-                <p className={css.contactNumber}>{contact.number}</p>
+                <p className={css.contactNumber}>{number}</p>
               </td>
               <td>
                 <button
                   className={css.deleteButton}
-                  onClick={() => onDeleteContact(contact.id)}
+                  onClick={() => dispatch(deleteContact(id))}
                 >
                   Delete
                 </button>
@@ -28,19 +44,6 @@ const ContactList = ({ contacts, onDeleteContact }) => {
         </tbody>
       </table>
     </div>
-
-    // <div>
-    //   <ul>
-    //     {contacts.map(contact => (
-    //       <li key={contact.id}>
-    //         <p>
-    //           {contact.name}: {contact.number}
-    //         </p>
-    //         <button onClick={() => onDeleteContact(contact.id)}>Delete</button>
-    //       </li>
-    //     ))}
-    //   </ul>
-    // </div>
   );
 };
 

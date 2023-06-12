@@ -1,27 +1,42 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import css from 'components/ContactForm/ContactForm.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { getContacts } from 'redux/selectors';
+import { addContact } from 'redux/contactsSlice';
 
-const ContactForm = ({ onSubmit }) => {
+const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
-  const handleFormSubmit = evt => {
-    // console.log(this.state);
-    evt.preventDefault();
+  const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
 
-    onSubmit(name, number);
+  const handleInputChange = ({ target: { name, value } }) => {
+    const normalizedValue = value.toLowerCase();
+    if (name === 'number')
+      if (contacts.some(contact => contact.number === value)) {
+        return alert(`${value} is already in contacts`);
+      } else setNumber(value);
+    if (name === 'name')
+      if (
+        contacts.some(contact => contact.name.toLowerCase() === normalizedValue)
+      ) {
+        return alert(`${value} is already in contacts`);
+      } else setName(value);
+  };
+
+  const reset = () => {
     setName('');
     setNumber('');
-    // this.setState({ name: '', number: '' });
-    // this.reset();
   };
 
-  const handleInputChange = event => {
-    const { name, value } = event.target;
-    if (name === 'name') setName(value);
-    if (name === 'number') setNumber(value);
+  const handleFormSubmit = evt => {
+    evt.preventDefault();
+    dispatch(addContact(name, number));
+    reset();
   };
+
   return (
     <div className={css.formContainer}>
       <form action="" onSubmit={handleFormSubmit}>
