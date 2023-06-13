@@ -1,5 +1,5 @@
 // import React from 'react';
-import PropTypes from 'prop-types';
+
 import css from 'components/Filter/Filter.module.css';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -28,11 +28,6 @@ const Filter = () => {
       />
     </label>
   );
-};
-
-Filter.propTypes = {
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
 };
 
 export default Filter;

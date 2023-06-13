@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+
 import css from 'components/ContactForm/ContactForm.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContacts } from 'redux/selectors';
@@ -14,17 +14,55 @@ const ContactForm = () => {
 
   const handleInputChange = ({ target: { name, value } }) => {
     const normalizedValue = value.toLowerCase();
-    if (name === 'number')
+
+    if (name === 'number') {
+      if (value && !/^\d+$/.test(value)) {
+        alert(
+          'Ви ввели неправильне значення для номеру (дозволені лише цифри)'
+        );
+        return;
+      }
+
       if (contacts.some(contact => contact.number === value)) {
-        return alert(`${value} is already in contacts`);
-      } else setNumber(value);
-    if (name === 'name')
+        alert(`${value} вже є у списку контактів`);
+        return;
+      } else {
+        setNumber(value);
+      }
+    }
+
+    if (name === 'name') {
+      if (value && !/^[a-zA-Zа-яА-Я]+$/.test(value)) {
+        alert(
+          'Ви ввели неправильне значення для імені (дозволені лише літери)'
+        );
+        return;
+      }
+
       if (
         contacts.some(contact => contact.name.toLowerCase() === normalizedValue)
       ) {
-        return alert(`${value} is already in contacts`);
-      } else setName(value);
+        alert(`${value} вже є у списку контактів`);
+        return;
+      } else {
+        setName(value);
+      }
+    }
   };
+
+  // const handleInputChange = ({ target: { name, value } }) => {
+  //   const normalizedValue = value.toLowerCase();
+  //   if (name === 'number')
+  //     if (contacts.some(contact => contact.number === value)) {
+  //       return alert(`${value} is already in contacts`);
+  //     } else setNumber(value);
+  //   if (name === 'name')
+  //     if (
+  //       contacts.some(contact => contact.name.toLowerCase() === normalizedValue)
+  //     ) {
+  //       return alert(`${value} is already in contacts`);
+  //     } else setName(value);
+  // };
 
   const reset = () => {
     setName('');
@@ -61,6 +99,7 @@ const ContactForm = () => {
             type="tel"
             id="number"
             name="number"
+            // pattern="^\+?\d{1,4}[-.\s]?\(?\d{1,3}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
@@ -76,10 +115,6 @@ const ContactForm = () => {
       </form>
     </div>
   );
-};
-
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
 };
 
 export default ContactForm;
