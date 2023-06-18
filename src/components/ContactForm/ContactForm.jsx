@@ -18,7 +18,7 @@ const ContactForm = () => {
     if (name === 'number') {
       if (value && !/^[0-9\s()+-]+$/.test(value)) {
         alert(
-          'Ви ввели неправильне значення для номеру (дозволені лише цифри, пробіли, дефіси, дужки та знак "+")'
+          'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +'
         );
         return;
       }
@@ -34,7 +34,7 @@ const ContactForm = () => {
     if (name === 'name') {
       if (value && !/^[a-zA-Zа-яА-Я\s'-]+$/.test(value)) {
         alert(
-          'Ви ввели неправильне значення для імені (дозволені лише літери, апостроф, тире та пробіли)'
+          "Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
         );
         return;
       }
@@ -85,7 +85,7 @@ const ContactForm = () => {
             type="text"
             id="name"
             name="name"
-            pattern="^[a-zA-Zа-яА-Я\s'-]+$"
+            pattern="^[a-zA-Zа-яА-Я]+$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
             onChange={handleInputChange}
@@ -99,8 +99,7 @@ const ContactForm = () => {
             type="tel"
             id="number"
             name="number"
-            // pattern="^\+?\d{1,4}[-.\s]?\(?\d{1,3}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$"
-            pattern="^[0-9\s()+-]+$"
+            pattern="^[0-9]+$"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
             onChange={handleInputChange}
