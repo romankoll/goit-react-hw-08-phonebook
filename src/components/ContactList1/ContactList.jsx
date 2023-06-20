@@ -1,19 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import css from 'components/ContactList1/ContactList.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContacts, getFilter } from 'redux/selectors';
 import { deleteContact } from 'redux/contactsSlice';
+import { fetchContacts } from 'components/api/contacts';
 
 const ContactList = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
+
+  const { items, isLoading, error } = useSelector(state => state.contacts);
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
+  // const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
 
   const filterByName = filter => {
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filter)
-    );
+    return items.filter(contact => contact.name.toLowerCase().includes(filter));
   };
 
   const normalizedFilter = filter.toLowerCase();

@@ -1,42 +1,48 @@
-import { createSlice, nanoid } from '@reduxjs/toolkit';
-import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+import { createSlice } from '@reduxjs/toolkit';
+import {
+  addContact,
+  deleteContact,
+  fetchContacts,
+} from 'components/api/contacts';
+import { contactsInitialState } from './InitialState';
+// import { store } from './store';
 
-const persistConfig = {
-  key: 'contacts',
-  storage,
+const handlePending = state => {
+  state.isLoading = true;
 };
 
-const contactsInitialState = { contacts: [] };
+const handleRejected = (state, action) => {
+  state.isLoading = false;
+  state.error = action.payload;
+};
 
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState: contactsInitialState,
-  reducers: {
-    addContact: {
-      reducer(state, action) {
-        state.contacts.push(action.payload);
-      },
-      prepare(name, number) {
-        return {
-          payload: {
-            name,
-            number,
-            id: nanoid(),
-          },
-        };
-      },
+  extraReducers: {
+    [fetchContacts.pending]: handleRejected,
+    [fetchContacts.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.items = action.payload;
+      state.error = null;
     },
-    deleteContact(state, action) {
-      state.contacts = state.contacts.filter(
-        contact => action.payload !== contact.id
-      );
+    [fetchContacts.rejected]: handleRejected,
+    [addContact.pending]: handleRejected,
+    [addContact.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.items.push(payload);
+      state.error = null;
     },
+    [addContact.rejected]: handleRejected,
+    [deleteContact.pending]: handleRejected,
+    [deleteContact.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = null;
+      const index = state.items.findIndex(contact => contact.id === payload.id);
+      state.items.splice(index, 1);
+    },
+    [deleteContact.rejected]: handleRejected,
   },
 });
 
-export const { addContact, deleteContact } = contactsSlice.actions;
-export const contactsReducer = persistReducer(
-  persistConfig,
-  contactsSlice.reducer
-);
+export const contactsReducer = contactsSlice.reducer;
