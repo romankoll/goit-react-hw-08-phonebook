@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 
 import css from 'components/ContactList1/ContactList.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getContacts, getFilter } from 'redux/selectors';
-import { deleteContact } from 'redux/contactsSlice';
-import { fetchContacts } from 'components/api/contacts';
+import { getFilter } from 'redux/selectors';
+// import { deleteContact } from 'redux/contactsSlice';
+import { deleteContact, fetchContacts } from 'components/api/contacts';
 
 const ContactList = () => {
   const dispatch = useDispatch();
 
-  const { items, isLoading, error } = useSelector(state => state.contacts);
+  const { items } = useSelector(state => state.contacts);
 
   useEffect(() => {
     dispatch(fetchContacts());
