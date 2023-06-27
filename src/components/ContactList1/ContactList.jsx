@@ -27,6 +27,7 @@ const ContactList = () => {
 
   return (
     <div className={css.container}>
+      <h2>Contacts</h2>
       <table className={css.contactTable}>
         <tbody>
           {filtredContacts.map(({ id, name, number }) => (
