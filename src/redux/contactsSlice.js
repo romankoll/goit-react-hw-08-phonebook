@@ -4,8 +4,14 @@ import {
   deleteContact,
   fetchContacts,
 } from 'components/api/contacts';
+import persistReducer from 'redux-persist/es/persistReducer';
 import { contactsInitialState } from './InitialState';
+import storage from 'redux-persist/lib/storage';
 // import { store } from './store';
+const persistConfig = {
+  key: 'contacts',
+  storage,
+};
 
 const handlePending = state => {
   state.isLoading = true;
@@ -48,4 +54,8 @@ const contactsSlice = createSlice({
   },
 });
 
-export const contactsReducer = contactsSlice.reducer;
+// export const contactsReducer = contactsSlice.reducer;
+export const contactsReducer = persistReducer(
+  persistConfig,
+  contactsSlice.reducer
+);
