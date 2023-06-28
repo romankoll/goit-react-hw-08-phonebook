@@ -9,7 +9,6 @@ import Home from './pages/Home/Home';
 const App = () => {
   return (
     <div>
-      <h1>hello</h1>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
