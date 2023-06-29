@@ -1,15 +1,25 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import css from 'components/SignUpForm/SignUpForm.module.css';
+import { useDispatch } from 'react-redux';
+import { signUp } from 'redux/contacts/auth/authOperations';
 
 const SignUpForm = () => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleFormSubmit = e => {
     e.preventDefault();
-    console.log({ password, email });
+    dispatch(signUp({ name, email, password })).then(() => {
+      navigate('/login');
+    });
+    setEmail('');
+    setName('');
+    setPassword('');
   };
   const handleInputChange = ({ target: { value, name } }) => {
     name === 'email'
@@ -43,7 +53,7 @@ const SignUpForm = () => {
             <input
               value={email}
               type="email"
-              id="name"
+              id="email"
               name="email"
               // pattern="^[a-zA-Zа-яА-Я]+$"
               // title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
@@ -56,11 +66,11 @@ const SignUpForm = () => {
             <label htmlFor="exampleInputPassword">Password</label>
             <input
               value={password}
-              type="tel"
+              type="password"
               id="password"
               name="password"
-              pattern="^[0-9]+$"
-              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+              //   pattern="^[0-9]+$"
+              //   title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
               required
               onChange={handleInputChange}
             />

@@ -1,14 +1,24 @@
 import React, { useState } from 'react';
 import css from 'components/LoginForm/LoginForm.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { logIn } from 'redux/contacts/auth/authOperations';
+import { useDispatch } from 'react-redux';
 
 const LoginForm = () => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleFormSubmit = e => {
     e.preventDefault();
-    console.log({ password, email });
+    dispatch(logIn({ email, password })).then(() => {
+      navigate('/');
+    });
+    setEmail('');
+
+    setPassword('');
   };
   const handleInputChange = ({ target: { value, name } }) => {
     name === 'email' ? setEmail(value) : setPassword(value);
@@ -25,7 +35,7 @@ const LoginForm = () => {
             <input
               value={email}
               type="email"
-              id="name"
+              id="email"
               name="email"
               // pattern="^[a-zA-Zа-яА-Я]+$"
               // title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
@@ -38,11 +48,11 @@ const LoginForm = () => {
             <label htmlFor="password">Password</label>
             <input
               value={password}
-              type="tel"
+              type="password"
               id="password"
               name="password"
-              pattern="^[0-9]+$"
-              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+              //   pattern="^[0-9]+$"
+              //   title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
               required
               onChange={handleInputChange}
             />

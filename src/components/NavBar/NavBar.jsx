@@ -1,16 +1,18 @@
 import AuthNav from 'components/AuthNav/AuthNav';
+import Navigation from 'components/Navigation/Navigation';
 import UserMenu from 'components/UserMenu/UserMenu';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { getIsLoggedIn } from 'redux/contacts/auth/authSelectors';
 
 const NavBar = () => {
+  const isLoggedIn = useSelector(getIsLoggedIn);
+  console.log(isLoggedIn);
   return (
-    <div>
-      <NavLink to="/">Home</NavLink>
-      <NavLink to="/contacts">Contacts</NavLink>
-      <AuthNav />
-      <UserMenu />
-    </div>
+    <header>
+      <Navigation />
+      {isLoggedIn ? <UserMenu /> : <AuthNav />}
+    </header>
   );
 };
 
