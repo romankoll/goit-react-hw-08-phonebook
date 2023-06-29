@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import css from 'components/LoginForm/LoginForm.module.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { logIn } from 'redux/contacts/auth/authOperations';
+import { logIn } from 'redux/auth/authOperations';
 import { useDispatch } from 'react-redux';
 
 const LoginForm = () => {

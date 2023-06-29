@@ -12,7 +12,7 @@ import {
   REGISTER,
 } from 'redux-persist';
 import persistReducer from 'redux-persist/es/persistReducer';
-import { authReducer } from './contacts/auth/authSlice';
+import { authReducer } from './auth/authSlice';
 
 const authPersistConfig = {
   key: 'auth',

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import css from 'components/SignUpForm/SignUpForm.module.css';
 import { useDispatch } from 'react-redux';
-import { signUp } from 'redux/contacts/auth/authOperations';
+import { signUp } from 'redux/auth/authOperations';
 
 const SignUpForm = () => {
   const [password, setPassword] = useState('');

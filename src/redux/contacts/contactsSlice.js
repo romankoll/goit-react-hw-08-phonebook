@@ -3,7 +3,7 @@ import {
   addContact,
   deleteContact,
   fetchContacts,
-} from 'components/api/contacts';
+} from 'redux/contacts/contacts';
 import persistReducer from 'redux-persist/es/persistReducer';
 import { contactsInitialState } from './InitialState';
 import storage from 'redux-persist/lib/storage';
