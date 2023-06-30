@@ -10,27 +10,28 @@ const initialState = {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  extraReducers: {
-    [signUp.fulfilled](state, { payload }) {
-      state.user = payload.user;
-      state.token = payload.token;
-      state.isLoggedIn = true;
-    },
-    [logIn.fulfilled](state, { payload }) {
-      state.user = payload.user;
-      state.token = payload.token;
-      state.isLoggedIn = true;
-    },
-    [logOut.fulfilled](state, { payload }) {
-      state.user = { name: null, email: null };
-      state.token = null;
-      state.isLoggedIn = false;
-    },
-    [fetchCurrentUser.fulfilled](state, { payload }) {
-      state.user = { ...payload.user };
-      // console.log(payload);
-      state.isLoggedIn = true;
-    },
+  extraReducers: builder => {
+    builder
+      .addCase(signUp.fulfilled, (state, { payload }) => {
+        state.user = payload.user;
+        state.token = payload.token;
+        state.isLoggedIn = true;
+      })
+      .addCase(logIn.fulfilled, (state, { payload }) => {
+        state.user = payload.user;
+        state.token = payload.token;
+        state.isLoggedIn = true;
+      })
+      .addCase(logOut.fulfilled, (state, { payload }) => {
+        state.user = { name: null, email: null };
+        state.token = null;
+        state.isLoggedIn = false;
+      })
+      .addCase(fetchCurrentUser.fulfilled, (state, { payload }) => {
+        state.user = { ...payload.user };
+        // console.log(payload);
+        state.isLoggedIn = true;
+      });
   },
 });
 
