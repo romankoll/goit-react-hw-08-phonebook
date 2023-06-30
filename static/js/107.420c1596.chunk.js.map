@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/107.420c1596.chunk.js","mappings":"kKAMA,UAJa,WACX,OAAO,kBACR,C","sources":["components/pages/Home/Home.jsx"],"sourcesContent":["import React from 'react';\n\nconst Home = () => {\n  return <div></div>;\n};\n\nexport default Home;\n"],"names":[],"sourceRoot":""}
