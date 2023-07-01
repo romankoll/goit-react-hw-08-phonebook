@@ -72,8 +72,9 @@ const ContactForm = () => {
       <h1>Phonebook</h1>
       <form action="" onSubmit={handleFormSubmit}>
         <div className={css['form-label']}>
-          <label htmlFor="name">Name</label>
+          <label htmlFor="name">Name:</label>
           <input
+            className={css.input}
             value={name}
             type="text"
             id="name"
@@ -86,8 +87,9 @@ const ContactForm = () => {
         </div>
 
         <div className={css['form-label']}>
-          <label htmlFor="number">Number</label>
+          <label htmlFor="number">Number:</label>
           <input
+            className={css.input}
             value={number}
             type="tel"
             id="number"

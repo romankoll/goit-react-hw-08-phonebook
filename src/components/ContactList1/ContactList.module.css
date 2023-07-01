@@ -1,8 +1,9 @@
 .container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 20px;
+  width: max-content;
 }
 
 .contactTable {
@@ -30,4 +31,7 @@
 
 .deleteButton:hover {
   background-color: red;
+}
+h2 {
+  color: rgb(60, 52, 95);
 }

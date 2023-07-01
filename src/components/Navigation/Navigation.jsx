@@ -1,12 +1,13 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+// import { NavLink } from 'react-router-dom';
+import { Container, StyledLink } from './Navigation.styled.jsx';
 
 const Navigation = () => {
   return (
-    <div>
-      <NavLink to="/">Home</NavLink>
-      <NavLink to="/contacts">Contacts</NavLink>
-    </div>
+    <Container>
+      <StyledLink to="/">Home</StyledLink>
+      <StyledLink to="/contacts">Contacts</StyledLink>
+    </Container>
   );
 };
 

@@ -28,7 +28,8 @@ const authSlice = createSlice({
         state.isLoggedIn = false;
       })
       .addCase(fetchCurrentUser.fulfilled, (state, { payload }) => {
-        state.user = { ...payload.user };
+        state.user = { ...payload };
+
         // console.log(payload);
         state.isLoggedIn = true;
       });

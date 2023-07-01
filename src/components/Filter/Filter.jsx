@@ -18,7 +18,7 @@ const Filter = () => {
 
   return (
     <label className={css.label} htmlFor="">
-      Find contacts by name
+      Find contacts by name:
       <input
         className={css.input}
         type="text"
