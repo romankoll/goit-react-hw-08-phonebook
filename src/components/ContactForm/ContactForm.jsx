@@ -13,8 +13,18 @@ const ContactForm = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
 
-  //
   const handleInputChange = ({ target: { name, value } }) => {
+    if (name === 'number') {
+      setNumber(value);
+    }
+
+    if (name === 'name') {
+      setName(value);
+    }
+  };
+
+  // Нова функція для перевірки після втрати фокуса
+  const handleInputBlur = ({ target: { name, value } }) => {
     const normalizedValue = value.toLowerCase();
 
     if (name === 'number') {
@@ -27,9 +37,8 @@ const ContactForm = () => {
 
       if (contacts.some(contact => contact.number === value)) {
         alert(`${value} вже є у списку контактів`);
+        setNumber('');
         return;
-      } else {
-        setNumber(value);
       }
     }
 
@@ -42,19 +51,52 @@ const ContactForm = () => {
       }
 
       if (
-        contacts.some(
-          contact =>
-            contact.name.toLowerCase() === normalizedValue &&
-            contact.name.toLowerCase() !== normalizedValue
-        )
+        contacts.some(contact => contact.name.toLowerCase() === normalizedValue)
       ) {
         alert(`${value} вже є у списку контактів`);
+        setName('');
         return;
-      } else {
-        setName(value);
       }
     }
   };
+  //
+  // const handleInputChange = ({ target: { name, value } }) => {
+  //   const normalizedValue = value.toLowerCase();
+
+  //   if (name === 'number') {
+  //     if (value && !/^[0-9\s()+-]+$/.test(value)) {
+  //       alert(
+  //         'Номер телефону повинен містити лише цифри та може містити пробіли, тире, дужки і може починатись з +'
+  //       );
+  //       return;
+  //     }
+
+  //     if (contacts.some(contact => contact.number === value)) {
+  //       alert(`${value} вже є у списку контактів`);
+  //       return;
+  //     } else {
+  //       setNumber(value);
+  //     }
+  //   }
+
+  //   if (name === 'name') {
+  //     if (value && !/^[a-zA-Zа-яА-Я\s'-]+$/.test(value)) {
+  //       alert(
+  //         "Ім'я може містити лише літери, апостроф, тире та пробіли. Наприклад, Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+  //       );
+  //       return;
+  //     }
+
+  //     if (
+  //       contacts.some(contact => contact.name.toLowerCase() === normalizedValue)
+  //     ) {
+  //       alert(`${value} вже є у списку контактів`);
+  //       return;
+  //     } else {
+  //       setName(value);
+  //     }
+  //   }
+  // };
 
   const reset = () => {
     setName('');
@@ -83,6 +125,7 @@ const ContactForm = () => {
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
             onChange={handleInputChange}
+            onBlur={handleInputBlur}
           />
         </div>
 
@@ -98,6 +141,7 @@ const ContactForm = () => {
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
             onChange={handleInputChange}
+            onBlur={handleInputBlur}
           />
         </div>
 
